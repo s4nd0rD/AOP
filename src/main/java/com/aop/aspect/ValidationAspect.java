@@ -17,7 +17,7 @@ public class ValidationAspect {
 
     private final Logger logger = LoggerFactory.getLogger(ValidationAspect.class);
     private static final Pattern SPECIAL_CHAR_PATTERN = Pattern.compile("[&!@#$%^*()\\-+=]");
-    private static final int MAX_LENGTH = 20;
+    private static final int MAX_LENGTH = 50;
 
     @Before("execution(* com.aop.service.*.*(..))")
     public void validateInput(JoinPoint joinPoint) {
