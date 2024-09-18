@@ -16,19 +16,19 @@ public class LoggingAspect {
 
     @Before("execution(* com.aop.service.*.*(..))")
     public void logBefore(JoinPoint joinPoint) {
-        logger.info("Calling method: " + joinPoint.getSignature().getName());
-        logger.info("With arguments: " + Arrays.toString(joinPoint.getArgs()));
+        if (logger.isInfoEnabled()) {
+            logger.info("Calling method: {} with arguments: {}", joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+        }
     }
-
 
     @AfterReturning(pointcut = "execution(* com.aop.service.*.*(..))", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
-        logger.info("Method " + joinPoint.getSignature().getName() + " returned: " + result);
+        logger.info("Method {} returned: {}", joinPoint.getSignature().getName(), result);
     }
 
     @AfterThrowing(pointcut = "execution(* com.aop.service.*.*(..))", throwing = "exception")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable exception) {
-        logger.error("Exception thrown by method: " + joinPoint.getSignature().getName());
-        logger.error("Exception message: " + exception.getMessage());
+        logger.error("Exception thrown by method: {}", joinPoint.getSignature().getName());
+        logger.error("Exception message: {}", exception.getMessage());
     }
 }

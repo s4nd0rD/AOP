@@ -21,19 +21,18 @@ public class ValidationAspect {
 
     @Before("execution(* com.aop.service.*.*(..))")
     public void validateInput(JoinPoint joinPoint) {
-        logger.info("Validating input for method: " + joinPoint.getSignature().getName());
+        logger.info("Validating input for method: {}", joinPoint.getSignature().getName());
 
         var args = joinPoint.getArgs();
-        if (args.length > 0 && args[0] instanceof String) {
-            var input = (String) args[0];
+        if (args.length > 0 && args[0] instanceof String input) {
 
             if (SPECIAL_CHAR_PATTERN.matcher(input).find()) {
-                logger.error("Invalid input with special characters detected: " + input);
+                logger.error("Invalid input with special characters detected: {} ", input);
                 throw new InvalidInputException("Input contains invalid special characters!");
             }
 
             if (input.length() > MAX_LENGTH) {
-                logger.error("Input is too long: " + input);
+                logger.error("Input is too long: {}", input);
                 throw new InputTooLongException("Input exceeds the maximum length of " + MAX_LENGTH + " characters!");
             }
         }
